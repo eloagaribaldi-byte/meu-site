@@ -2,47 +2,52 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>ScaleFlow | Dashboard</title>
+    <title>ScaleFlow | Professional Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        .sidebar-item:hover { background: #FF5722; color: white; }
+        .card-shadow { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+        .sidebar-item:hover { background: #fff7ed; color: #ea580c; border-left: 4px solid #ea580c; }
     </style>
 </head>
-<body class="bg-[#0A0A0A] text-gray-200 flex min-h-screen">
+<body class="bg-gray-50 text-gray-800 font-sans flex min-h-screen">
 
-    <aside class="w-64 bg-[#111] border-r border-[#222] p-6">
-        <h2 class="text-xl font-black text-orange-500 mb-10 tracking-widest">SCALEFLOW</h2>
-        <nav class="space-y-2">
-            <button onclick="show('dashboard')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3"><i data-lucide="layout-dashboard"></i> Dashboard</button>
-            <button onclick="show('links')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3"><i data-lucide="link"></i> Conversor</button>
-            <button onclick="show('intel')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3"><i data-lucide="radar"></i> Radar</button>
+    <aside class="w-64 bg-white border-r border-gray-200 p-6 flex flex-col">
+        <h2 class="text-xl font-black text-orange-600 mb-10 tracking-tighter">SCALEFLOW</h2>
+        <nav class="space-y-2 flex-grow">
+            <button onclick="show('dashboard')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium transition"><i data-lucide="layout-dashboard"></i> Dashboard</button>
+            <button onclick="show('links')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium transition"><i data-lucide="link"></i> Conversor</button>
+            <button onclick="show('intel')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium transition"><i data-lucide="radar"></i> Radar</button>
         </nav>
     </aside>
 
     <main class="flex-1 p-10">
         <div id="dashboard" class="content-section">
-            <h1 class="text-2xl font-bold mb-4">Dashboard</h1>
-            <p>Seja bem-vindo ao seu painel.</p>
+            <h1 class="text-3xl font-bold mb-8">Olá, pronta para escalar?</h1>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100">
+                    <p class="text-xs uppercase text-gray-500 font-bold">Comissões (Mês)</p>
+                    <h3 class="text-4xl font-black mt-2 text-orange-600">R$ 2.450</h3>
+                </div>
+                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100">
+                    <p class="text-xs uppercase text-gray-500 font-bold">Cliques Hoje</p>
+                    <h3 class="text-4xl font-black mt-2 text-gray-800">128</h3>
+                </div>
+            </div>
         </div>
 
         <div id="links" class="content-section hidden">
-            <h1 class="text-2xl font-bold mb-4">Conversor</h1>
-            <p>Cole seu link aqui.</p>
-        </div>
-
-        <div id="intel" class="content-section hidden">
-            <h1 class="text-2xl font-bold mb-4">Radar de Produtos</h1>
-            <p>Análise de mercado.</p>
+            <h2 class="text-2xl font-bold mb-6">Conversor</h2>
+            <div class="bg-white p-8 rounded-2xl card-shadow border border-gray-100">
+                <input type="text" placeholder="https://shopee.com.br/produto..." class="w-full bg-gray-50 border border-gray-200 p-4 rounded-xl outline-none focus:border-orange-500">
+                <button class="mt-4 w-full bg-orange-600 text-white font-bold py-4 rounded-xl hover:bg-orange-700 transition">Gerar Link</button>
+            </div>
         </div>
     </main>
 
     <script>
-        // Função Central de Visibilidade
         function show(id) {
-            // Esconde todas as seções
             document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
-            // Mostra apenas a selecionada
             document.getElementById(id).classList.remove('hidden');
         }
         lucide.createIcons();
