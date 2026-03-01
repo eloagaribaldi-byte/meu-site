@@ -20,7 +20,7 @@
     <aside class="w-64 bg-gray-950/70 border-r border-gray-800 p-6 flex flex-col card-scifi">
         <h2 class="text-xl font-bold glow-text-cyan mb-10 tracking-widest italic">SCALEFLOW</h2>
         <nav class="space-y-2 flex-grow">
-            <div onclick="show('dashboard')" class="sidebar-item active p-3 rounded-lg flex items-center gap-3"><i data-lucide="layout-dashboard"></i> Dashboard</div>
+            <div onclick="show('dashboard')" id="nav-dashboard" class="sidebar-item active p-3 rounded-lg flex items-center gap-3"><i data-lucide="layout-dashboard"></i> Dashboard</div>
             <div onclick="show('intel')" class="sidebar-item p-3 rounded-lg flex items-center gap-3"><i data-lucide="scan-eye"></i> Motor Intel</div>
             <div onclick="show('rejeicoes')" class="sidebar-item p-3 rounded-lg flex items-center gap-3"><i data-lucide="x-octagon"></i> Rejeições</div>
             <div onclick="show('config')" class="sidebar-item p-3 rounded-lg flex items-center gap-3"><i data-lucide="settings"></i> Config</div>
@@ -29,34 +29,57 @@
     </aside>
 
     <main class="flex-1 p-10">
+        
+        <div id="dashboard" class="content-section">
+            <h1 class="text-3xl font-bold mb-8 glow-text-cyan">Central de Comando</h1>
+            <div class="grid grid-cols-4 gap-6">
+                <div class="card-scifi p-6 rounded-2xl border-l-4 border-orange-500">
+                    <p class="text-[10px] text-orange-400 uppercase">Comissões Mês</p>
+                    <h3 class="text-2xl font-bold mt-2">R$ 0,00</h3>
+                </div>
+            </div>
+        </div>
+
+        <div id="intel" class="content-section hidden">
+            <h2 class="text-3xl font-bold mb-6 glow-text-cyan">Motor de Inteligência</h2>
+            <div class="card-scifi p-8 rounded-3xl">
+                <input type="text" placeholder="Cole URL Shopee..." class="w-full bg-gray-950 border border-gray-800 p-4 rounded-xl mb-4">
+                <button class="w-full bg-cyan-600 text-white font-bold py-4 rounded-xl">Analisar Dados</button>
+            </div>
+        </div>
+
+        <div id="rejeicoes" class="content-section hidden">
+            <h2 class="text-3xl font-bold mb-6 text-white">Log de Rejeições</h2>
+            <div class="card-scifi p-6 rounded-3xl">Página de Rejeições ativa.</div>
+        </div>
+
+        <div id="config" class="content-section hidden">
+            <h2 class="text-3xl font-bold mb-6 text-white">Configurações</h2>
+            <div class="card-scifi p-6 rounded-3xl">Configurações ativas.</div>
+        </div>
+
         <div id="sobre" class="content-section hidden">
             <h2 class="text-3xl font-bold mb-6 text-white">Sobre o Sistema</h2>
             <div class="card-scifi p-8 rounded-3xl max-w-2xl">
-                <p class="text-cyan-400 font-bold mb-4">Versão: 1.0.0 (Build 2026-03)</p>
+                <p class="text-cyan-400 font-bold mb-4">Versão: 1.0.0</p>
                 <h3 class="text-xl font-bold text-white mb-4">Manual de Segurança</h3>
                 <ul class="text-sm text-gray-400 space-y-3">
-                    <li>• <b>Backup de Dados:</b> Como o ScaleFlow armazena dados no navegador (LocalStorage), limpe seu cache com cuidado. Salve uma cópia do arquivo index.html em um drive externo.</li>
-                    <li>• <b>Criptografia:</b> Sua API Key é codificada localmente. Não compartilhe seu computador com usuários não confiáveis.</li>
-                    <li>• <b>Privacidade:</b> O ScaleFlow não possui servidor central. Todos os seus dados de análise e rejeições residem apenas no seu hardware.</li>
+                    <li>• Backup local é essencial.</li>
+                    <li>• Dados criptografados no seu dispositivo.</li>
                 </ul>
-                <button onclick="downloadBackup()" class="mt-8 w-full bg-purple-900 text-purple-200 py-3 rounded-xl border border-purple-800">Exportar Backup de Dados</button>
             </div>
         </div>
-        
-        </main>
+    </main>
 
     <script>
         function show(id) {
+            // Oculta todas
             document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
+            // Mostra a selecionada
             document.getElementById(id).classList.remove('hidden');
-        }
-        function downloadBackup() {
-            const data = JSON.stringify(localStorage);
-            const blob = new Blob([data], {type: 'application/json'});
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = 'scaleflow_backup.json';
-            a.click();
+            // Atualiza menu
+            document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+            event.currentTarget.classList.add('active');
         }
         lucide.createIcons();
     </script>
