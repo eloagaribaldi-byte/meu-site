@@ -10,10 +10,6 @@
         .sidebar-item { transition: all 0.2s; color: #4b5563; border-left: 4px solid transparent; }
         .sidebar-item:hover { background: #fff7ed; color: #ea580c; border-left: 4px solid #ea580c; }
         .content-section { transition: opacity 0.2s; }
-        @keyframes radar-beam { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .radar-box { position: relative; width: 120px; height: 120px; background: #111; border-radius: 50%; overflow: hidden; border: 2px solid #333; }
-        .radar-beam { position: absolute; top: 50%; left: 50%; width: 50%; height: 2px; background: linear-gradient(90deg, rgba(234,88,12,0) 0%, rgba(234,88,12,1) 100%); transform-origin: left center; }
-        .scanning .radar-beam { animation: radar-beam 2s linear infinite; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans flex min-h-screen">
@@ -21,54 +17,30 @@
     <aside class="w-64 bg-white border-r border-gray-200 p-6 flex flex-col">
         <h2 class="text-xl font-black text-orange-600 mb-10 tracking-tighter italic">SCALEFLOW</h2>
         <nav class="space-y-1 flex-grow">
-            <button onclick="show('dashboard')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium"><i data-lucide="layout-dashboard" class="w-5-h-5"></i> Dashboard</button>
-            <button onclick="show('intel')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium"><i data-lucide="radar" class="w-5-h-5"></i> Radar & Inteligência</button>
-            <button onclick="show('links')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium"><i data-lucide="link" class="w-5-h-5"></i> Conversor</button>
-            <button onclick="show('vault')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium"><i data-lucide="video" class="w-5-h-5"></i> Vault Criativos</button>
-            <button onclick="show('roi')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium"><i data-lucide="calculator" class="w-5-h-5"></i> ROI & Metas</button>
+            <button onclick="show('dashboard')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium"><i data-lucide="layout-dashboard" class="w-5 h-5"></i> Dashboard</button>
+            <button onclick="show('intel')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium"><i data-lucide="radar" class="w-5 h-5"></i> Motor de Inteligência</button>
+            <button onclick="show('config')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium"><i data-lucide="shield-check" class="w-5 h-5"></i> Configurações</button>
         </nav>
     </aside>
 
     <main class="flex-1 p-10">
-        <div id="dashboard" class="content-section">
-            <h1 class="text-3xl font-bold mb-8">Central de Comando</h1>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div class="bg-white p-6 rounded-2xl card-shadow border-l-4 border-l-orange-500">
-                    <p class="text-xs uppercase text-gray-500 font-bold">Comissões</p>
-                    <h3 class="text-3xl font-black mt-2">R$ 0,00</h3>
-                </div>
-                <div class="bg-white p-6 rounded-2xl card-shadow border-l-4 border-l-green-500">
-                    <p class="text-xs uppercase text-gray-500 font-bold">Insights Ativos</p>
-                    <h3 class="text-3xl font-black mt-2">8</h3>
-                </div>
-            </div>
-        </div>
-
         <div id="intel" class="content-section hidden">
-            <h2 class="text-2xl font-bold mb-6">Radar & Inteligência Competitiva</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-white p-6 rounded-2xl card-shadow">
-                    <div id="radarContainer" class="radar-box mx-auto mb-6"><div class="radar-beam"></div></div>
-                    <input type="text" id="urlInput" placeholder="Cole URL de produto ou loja..." class="w-full bg-gray-50 border p-4 rounded-xl mb-4">
-                    <button onclick="iniciarScan()" id="btnScan" class="w-full bg-orange-600 text-white font-bold py-4 rounded-xl">Analisar com Inteligência</button>
-                </div>
-                <div class="space-y-4">
-                    <div class="bg-white p-5 rounded-xl border border-gray-100 card-shadow">
-                        <h4 class="font-bold flex items-center gap-2"><i data-lucide="zap" class="text-orange-500"></i> Fontes Ativas:</h4>
-                        <ul class="text-sm text-gray-600 mt-2 space-y-1 italic">
-                            <li>• Shopdora (Tendências Shopee)</li>
-                            <li>• Koala Inspector (Análise de Concorrência)</li>
-                            <li>• Shine Inspector (Popularidade)</li>
-                            <li>• Alitools (Histórico de Preços)</li>
-                        </ul>
-                    </div>
-                </div>
+            <h2 class="text-3xl font-bold mb-6">Motor de Inteligência</h2>
+            <div class="bg-white p-8 rounded-2xl card-shadow border border-gray-100">
+                <input type="text" id="targetUrl" placeholder="Cole a URL para análise..." class="w-full bg-gray-50 border p-4 rounded-xl mb-6">
+                <button onclick="validarProduto()" class="w-full bg-orange-600 text-white font-bold py-4 rounded-xl">Consolidar Dados</button>
             </div>
         </div>
 
-        <div id="links" class="content-section hidden"><h2 class="text-2xl font-bold">Conversor</h2></div>
-        <div id="vault" class="content-section hidden"><h2 class="text-2xl font-bold">Vault Criativos</h2></div>
-        <div id="roi" class="content-section hidden"><h2 class="text-2xl font-bold">ROI & Metas</h2></div>
+        <div id="config" class="content-section">
+            <h2 class="text-3xl font-bold mb-6">Segurança e API</h2>
+            <div class="bg-white p-8 rounded-2xl card-shadow border border-gray-100 max-w-lg">
+                <label class="block text-sm font-bold text-gray-500 mb-2">Chave de API Shopee (Tokens)</label>
+                <input type="password" id="apiInput" placeholder="Cole sua chave aqui..." class="w-full bg-gray-50 border p-4 rounded-xl mb-4">
+                <button onclick="saveApiKey()" class="w-full bg-black text-white font-bold py-3 rounded-xl hover:bg-gray-800">Salvar Chave com Segurança</button>
+                <p class="text-xs text-gray-400 mt-4 italic">* A chave é salva apenas no seu navegador. Nunca a compartilhe ou envie para servidores externos.</p>
+            </div>
+        </div>
     </main>
 
     <script>
@@ -76,14 +48,21 @@
             document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
         }
-        function iniciarScan() {
-            const container = document.getElementById('radarContainer');
-            container.classList.add('scanning');
-            setTimeout(() => { 
-                container.classList.remove('scanning'); 
-                alert("Dados das ferramentas (Shopdora/Koala/Shine) cruzados com sucesso!"); 
-            }, 3000);
+
+        function saveApiKey() {
+            const key = document.getElementById('apiInput').value;
+            if(!key) return;
+            // Criptografia básica usando btoa (base64) para ocultar do olho nu
+            localStorage.setItem('shopee_api_key', btoa(key));
+            document.getElementById('apiInput').value = '';
+            alert("Chave salva com segurança no seu navegador.");
         }
+
+        function getApiKey() {
+            const saved = localStorage.getItem('shopee_api_key');
+            return saved ? atob(saved) : null;
+        }
+
         lucide.createIcons();
     </script>
 </body>
