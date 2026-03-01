@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minha Loja</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, sans-serif;
+}
+
+body{
+    background:#000;
+    color:#fff;
+}
+
+.container{
+    padding:20px;
+    padding-bottom:100px;
+}
+
+.profile{
+    text-align:center;
+    margin-top:30px;
+}
+
+.profile img{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    border:3px solid #ff0050;
+}
+
+.username{
+    margin-top:10px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.bio{
+    font-size:14px;
+    margin-top:8px;
+    color:#ccc;
+}
+
+.menu{
+    margin-top:30px;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.menu button{
+    background:#111;
+    border:1px solid #333;
+    color:#fff;
+    padding:15px;
+    border-radius:10px;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.menu button:hover{
+    background:#1a1a1a;
+}
+
+.shopee-btn{
+    background:#ff5722 !important;
+    font-weight:bold;
+}
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    background:#111;
+    display:flex;
+    justify-content:space-around;
+    padding:12px 0;
+    border-top:1px solid #222;
+}
+
+.bottom-nav div{
+    text-align:center;
+    font-size:12px;
+    cursor:pointer;
+}
+
+.bottom-nav span{
+    display:block;
+    font-size:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="profile">
+        <img src="https://via.placeholder.com/150" alt="Foto">
+        <div class="username">@sualoja</div>
+        <div class="bio">Produtos virais que resolvem problemas do dia a dia 🚀</div>
+    </div>
+
+    <div class="menu">
+        <button onclick="irShopee()" class="shopee-btn">🔥 Ver Produto na Shopee</button>
+        <button>⭐ Mais Vendidos</button>
+        <button>🎁 Promoções</button>
+        <button>📦 Lançamentos</button>
+        <button>💬 Falar no WhatsApp</button>
+    </div>
+
+</div>
+
+<div class="bottom-nav">
+    <div><span>🏠</span>Início</div>
+    <div><span>🔍</span>Buscar</div>
+    <div><span>➕</span>Criar</div>
+    <div><span>❤️</span>Favoritos</div>
+    <div><span>👤</span>Perfil</div>
+</div>
+
+<script>
+function irShopee(){
+    window.open("COLE_AQUI_SEU_LINK_DA_SHOPEE", "_blank");
+}
+</script>
+
+</body>
+</html>
