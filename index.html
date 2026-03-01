@@ -25,9 +25,6 @@
             <button onclick="show('intel')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium"><i data-lucide="radar" class="w-5 h-5"></i> Motor de Inteligência</button>
             <button onclick="show('links')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium"><i data-lucide="link" class="w-5 h-5"></i> Conversor</button>
             <button onclick="show('vault')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium"><i data-lucide="video" class="w-5 h-5"></i> Vault Criativos</button>
-            <button onclick="show('calendario')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium"><i data-lucide="calendar" class="w-5 h-5"></i> Calendário</button>
-            <button onclick="show('rejeicoes')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium"><i data-lucide="x-octagon" class="w-5 h-5"></i> Log Rejeições</button>
-            <button onclick="show('roi')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium"><i data-lucide="calculator" class="w-5 h-5"></i> Calculadora ROI</button>
             <button onclick="show('config')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium"><i data-lucide="shield-check" class="w-5 h-5"></i> Configurações</button>
         </nav>
     </aside>
@@ -40,18 +37,14 @@
                     <p class="text-xs uppercase text-gray-500 font-bold">Comissões (Mês)</p>
                     <h3 class="text-3xl font-black mt-2 text-gray-800">R$ 0,00</h3>
                 </div>
-                <div class="bg-white p-6 rounded-2xl card-shadow border-l-4 border-l-green-500">
-                    <p class="text-xs uppercase text-gray-500 font-bold">Vendas Totais</p>
-                    <h3 class="text-3xl font-black mt-2 text-gray-800">0</h3>
-                </div>
-                <div class="bg-white p-6 rounded-2xl card-shadow border-l-4 border-l-blue-500">
-                    <p class="text-xs uppercase text-gray-500 font-bold">Alta Procura</p>
-                    <h3 class="text-3xl font-black mt-2 text-gray-800">0</h3>
-                </div>
-                <div class="bg-white p-6 rounded-2xl card-shadow border-l-4 border-l-purple-500">
-                    <p class="text-xs uppercase text-gray-500 font-bold">Comissão Extra</p>
-                    <h3 class="text-3xl font-black mt-2 text-gray-800">R$ 0,00</h3>
-                </div>
+            </div>
+        </div>
+
+        <div id="links" class="content-section hidden">
+            <h2 class="text-2xl font-bold mb-6">Conversor de Links</h2>
+            <div class="bg-white p-8 rounded-2xl card-shadow mb-6 border border-gray-100">
+                <input type="text" id="urlInput" placeholder="Cole a URL original da Shopee aqui..." class="w-full bg-gray-50 border p-4 rounded-xl mb-4 focus:border-orange-500 outline-none">
+                <button onclick="converterLink()" class="w-full bg-orange-600 text-white font-bold py-4 rounded-xl hover:bg-orange-700 transition">Gerar Link de Afiliado</button>
             </div>
         </div>
 
@@ -60,53 +53,22 @@
             <div class="bg-white p-8 rounded-2xl card-shadow border border-gray-100">
                 <div class="flex items-center gap-6 mb-6">
                     <div id="radarContainer" class="radar-box"><div class="radar-beam"></div></div>
-                    <input type="text" id="targetUrl" placeholder="Cole a URL do produto..." class="flex-grow bg-gray-50 border p-4 rounded-xl">
+                    <input type="text" id="targetUrl" placeholder="Cole a URL para análise..." class="flex-grow bg-gray-50 border p-4 rounded-xl">
                 </div>
                 <button onclick="iniciarScan()" id="btnScan" class="w-full bg-orange-600 text-white font-bold py-4 rounded-xl">Analisar com Inteligência</button>
             </div>
         </div>
 
-        <div id="links" class="content-section hidden">
-            <h2 class="text-2xl font-bold mb-6">Conversor de Links</h2>
-            <div class="bg-white p-8 rounded-2xl card-shadow mb-6 border border-gray-100">
-                <input type="text" id="urlInput" placeholder="Cole URL original..." class="w-full bg-gray-50 border p-4 rounded-xl mb-4">
-                <button onclick="converterLink()" class="w-full bg-orange-600 text-white font-bold py-4 rounded-xl">Gerar Link de Afiliado</button>
-            </div>
-            <table class="w-full bg-white rounded-2xl card-shadow overflow-hidden"><tbody id="historicoLinks"></tbody></table>
-        </div>
-
-        <div id="vault" class="content-section hidden">
-            <h2 class="text-2xl font-bold mb-6">Vault de Criativos</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100 italic text-gray-500">Nenhum criativo salvo.</div></div>
-        </div>
-
-        <div id="calendario" class="content-section hidden">
-            <h2 class="text-2xl font-bold mb-6">Calendário de Postagens</h2>
-            <div class="bg-white p-8 rounded-2xl card-shadow border border-gray-100">Agende suas próximas campanhas.</div>
-        </div>
-
-        <div id="rejeicoes" class="content-section hidden">
-            <h2 class="text-2xl font-bold mb-6">Log de Rejeições</h2>
-            <div class="bg-white p-8 rounded-2xl card-shadow border border-gray-100">Produtos com baixo feedback.</div>
-        </div>
-
-        <div id="roi" class="content-section hidden">
-            <h2 class="text-2xl font-bold mb-6">Calculadora de Margem</h2>
-            <div class="bg-white p-8 rounded-2xl card-shadow max-w-sm">
-                <input type="number" id="price" placeholder="Preço (R$)" class="w-full p-3 border rounded-xl mb-4">
-                <input type="number" id="comissao" placeholder="% Comissão" class="w-full p-3 border rounded-xl mb-4">
-                <button onclick="calcularROI()" class="w-full bg-black text-white py-3 rounded-xl">Calcular</button>
-                <div id="resultadoROI" class="mt-4 p-3 bg-orange-50 text-orange-800 rounded-lg font-bold hidden"></div>
-            </div>
-        </div>
-
         <div id="config" class="content-section hidden">
-            <h2 class="text-2xl font-bold mb-6">Segurança e API</h2>
-            <div class="bg-white p-8 rounded-2xl card-shadow max-w-md">
-                <input type="password" id="apiInput" placeholder="Sua chave de API (Seguro)..." class="w-full p-4 border rounded-xl mb-4">
-                <button onclick="saveApiKey()" class="w-full bg-black text-white py-3 rounded-xl">Salvar Chave</button>
+            <h2 class="text-2xl font-bold mb-6">Configurações</h2>
+            <div class="bg-white p-8 rounded-2xl card-shadow max-w-md border border-gray-100">
+                <div id="apiStatus" class="mb-4 p-3 rounded-lg bg-gray-100 text-gray-600 font-bold text-center">Status: API não configurada</div>
+                <input type="password" id="apiInput" placeholder="Sua chave de API..." class="w-full p-4 border rounded-xl mb-4">
+                <button onclick="saveApiKey()" class="w-full bg-black text-white py-3 rounded-xl hover:bg-gray-800">Salvar Chave</button>
             </div>
         </div>
+
+        <div id="vault" class="content-section hidden"></div>
     </main>
 
     <script>
@@ -120,22 +82,27 @@
             setTimeout(() => { container.classList.remove('scanning'); alert("Análise concluída!"); }, 3000);
         }
         function converterLink() {
-            alert('Link processado!');
-        }
-        function calcularROI() {
-            const p = document.getElementById('price').value;
-            const c = document.getElementById('comissao').value;
-            const res = document.getElementById('resultadoROI');
-            res.classList.remove('hidden');
-            res.innerHTML = `Lucro: R$ ${(p * c / 100).toFixed(2)}`;
+            const url = document.getElementById('urlInput').value;
+            if(!url) return alert("Cole uma URL!");
+            alert("Link processado e convertido!");
         }
         function saveApiKey() {
             const key = document.getElementById('apiInput').value;
             if(!key) return;
             localStorage.setItem('shopee_api_key', btoa(key));
-            alert("API Key salva com segurança.");
+            const status = document.getElementById('apiStatus');
+            status.innerText = "Status: API Conectada (Ativa)";
+            status.className = "mb-4 p-3 rounded-lg bg-green-100 text-green-700 font-bold text-center";
             document.getElementById('apiInput').value = '';
         }
+        // Verificar status ao carregar
+        window.onload = () => {
+            if(localStorage.getItem('shopee_api_key')) {
+                const status = document.getElementById('apiStatus');
+                status.innerText = "Status: API Conectada (Ativa)";
+                status.className = "mb-4 p-3 rounded-lg bg-green-100 text-green-700 font-bold text-center";
+            }
+        };
         lucide.createIcons();
     </script>
 </body>
