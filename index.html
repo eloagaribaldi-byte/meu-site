@@ -10,6 +10,29 @@
         .sidebar-item { transition: all 0.2s; color: #4b5563; border-left: 4px solid transparent; }
         .sidebar-item:hover { background: #fff7ed; color: #ea580c; border-left: 4px solid #ea580c; }
         .content-section { transition: opacity 0.2s; }
+
+        /* Animações do Radar */
+        @keyframes radar-beam {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes radar-pulse {
+            0% { opacity: 1; scale: 1; }
+            80% { opacity: 0; scale: 1.5; }
+            100% { opacity: 0; scale: 1.5; }
+        }
+
+        .radar-box { position: relative; width: 150px; height: 150px; background: #111; border-radius: 50%; border: 2px solid #333; overflow: hidden; }
+        .radar-beam { position: absolute; top: 50%; left: 50%; width: 50%; height: 2px; background: linear-gradient(90deg, rgba(234,88,12,0) 0%, rgba(234,88,12,1) 100%); transform-origin: left center; }
+        .radar-circle { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 50%; border: 1px solid rgba(234,88,12,0.3); }
+        
+        /* Classes para ativar animação via JS */
+        .scanning .radar-beam { animation: radar-beam 2s linear infinite; }
+        .scanning .radar-circle { animation: radar-pulse 2s infinite; }
+        .scanning .radar-circle:nth-child(2) { animation-delay: 0.5s; }
+        .scanning .radar-circle:nth-child(3) { animation-delay: 1s; }
+
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans flex min-h-screen">
@@ -65,7 +88,33 @@
             <table class="w-full bg-white rounded-2xl card-shadow overflow-hidden"><tbody id="historicoLinks"></tbody></table>
         </div>
 
-        <div id="intel" class="content-section hidden"><h2 class="text-2xl font-bold">Radar de Mercado</h2></div>
+        <div id="intel" class="content-section hidden">
+            <h2 class="text-2xl font-bold mb-6">Radar de Mercado</h2>
+            <div class="bg-white p-8 rounded-2xl card-shadow border border-gray-100 mb-6">
+                <div class="flex items-center gap-6">
+                    <div id="radarContainer" class="radar-box flex-shrink-0">
+                        <div class="radar-beam"></div>
+                        <div class="radar-circle w-1/4 h-1/4"></div>
+                        <div class="radar-circle w-1/2 h-1/2"></div>
+                        <div class="radar-circle w-3/4 h-3/4"></div>
+                        <i data-lucide="target" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 text-orange-600 opacity-50"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <input type="text" id="radarUrlInput" placeholder="Cole a URL do produto Shopee..." class="w-full bg-gray-50 border p-4 rounded-xl mb-4 focus:border-orange-500 outline-none">
+                        <button onclick="iniciarScan()" id="btnScan" class="w-full bg-black text-white font-bold py-4 rounded-xl hover:bg-gray-800 flex items-center justify-center gap-2">
+                            <i data-lucide="search" class="w-5 h-5"></i> Analisar Produto
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="radarResults" class="hidden animate-pulse">
+                <div class="bg-white p-6 rounded-2xl card-shadow border border-orange-100">
+                    <h4 class="font-bold text-orange-600">Análise Concluída</h4>
+                    <p class="text-sm text-gray-500 mt-1">Produto com alto potencial de conversão detectado.</p>
+                </div>
+            </div>
+        </div>
+
         <div id="vault" class="content-section hidden"><h2 class="text-2xl font-bold">Vault de Criativos</h2></div>
         <div id="calendario" class="content-section hidden"><h2 class="text-2xl font-bold">Calendário de Postagens</h2></div>
         <div id="rejeicoes" class="content-section hidden"><h2 class="text-2xl font-bold">Log de Rejeições</h2></div>
@@ -99,6 +148,34 @@
             res.classList.remove('hidden');
             res.innerHTML = `Lucro Estimado: R$ ${(p * c / 100).toFixed(2)}`;
         }
+
+        // Lógica da Animação do Radar
+        function iniciarScan() {
+            const input = document.getElementById('radarUrlInput');
+            const container = document.getElementById('radarContainer');
+            const results = document.getElementById('radarResults');
+            const btn = document.getElementById('btnScan');
+
+            if (!input.value) { alert("Cole uma URL primeiro!"); return; }
+
+            // Ativa animação
+            container.classList.add('scanning');
+            btn.innerHTML = `<i data-lucide="loader-circle" class="w-5 h-5 animate-spin"></i> Escaneando...`;
+            btn.disabled = true;
+            results.classList.add('hidden');
+            lucide.createIcons(); // Atualiza ícone do botão
+
+            // Simula tempo de busca (3 segundos)
+            setTimeout(() => {
+                container.classList.remove('scanning');
+                btn.innerHTML = `<i data-lucide="search" class="w-5 h-5"></i> Analisar Produto`;
+                btn.disabled = false;
+                results.classList.remove('hidden'); // Mostra resultado simulado
+                input.value = '';
+                lucide.createIcons();
+            }, 3000);
+        }
+
         document.getElementById('csvFile').addEventListener('change', function(e) {
             alert("Analisando relatório Shopee...");
         });
