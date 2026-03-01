@@ -1,75 +1,39 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>ScaleFlow | Dashboard de Afiliada</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        body { background-color: #050505; color: #e5e5e5; }
-        .glass { background: rgba(17, 17, 17, 0.7); backdrop-filter: blur(10px); border: 1px solid #222; }
-        .sidebar-item { transition: all 0.3s ease; }
-        .sidebar-item:hover { background: #ea580c; color: white; transform: translateX(5px); }
-        .card-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(234, 88, 12, 0.1); }
-        input::placeholder { color: #555; }
-    </style>
-</head>
-<body class="font-sans flex min-h-screen">
+<main class="flex-1 p-10" id="content">
+    
+    <div id="dashboard">
+        <h1 class="text-3xl font-bold mb-8">Olá, pronta para escalar?</h1>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="glass p-6 rounded-2xl card-shadow border-l-4 border-l-orange-600">
+                <p class="text-xs uppercase tracking-wider text-gray-500 font-bold">Comissões Acumuladas</p>
+                <h3 class="text-4xl font-black mt-2 text-orange-500">R$ 1.240,00</h3>
+            </div>
+            </div>
 
-    <aside class="w-64 bg-[#0a0a0a] border-r border-[#1a1a1a] p-6 flex flex-col">
-        <h2 class="text-2xl font-black text-orange-600 mb-10 tracking-tighter italic">SCALEFLOW</h2>
-        <nav class="space-y-3 flex-grow">
-            <button onclick="show('dashboard')" class="sidebar-item w-full text-left p-3 rounded-xl flex items-center gap-3 font-medium"><i data-lucide="layout-dashboard" class="w-5 h-5"></i> Dashboard</button>
-            <button onclick="show('links')" class="sidebar-item w-full text-left p-3 rounded-xl flex items-center gap-3 font-medium"><i data-lucide="link" class="w-5 h-5"></i> Conversor</button>
-            <button onclick="show('intel')" class="sidebar-item w-full text-left p-3 rounded-xl flex items-center gap-3 font-medium"><i data-lucide="trending-up" class="w-5 h-5"></i> Intel Produtos</button>
-        </nav>
-        <div class="mt-auto pt-6 text-[10px] text-gray-700 uppercase tracking-widest font-bold border-t border-[#1a1a1a]">v1.0 - Modo Operação</div>
-    </aside>
+        <h3 class="text-xl font-bold mb-4">Últimos links convertidos</h3>
+        <div class="glass p-4 rounded-2xl border border-[#222]">
+            <table class="w-full text-sm text-left">
+                <thead class="text-gray-500 uppercase text-xs">
+                    <tr><th class="p-3">Produto</th><th class="p-3">Data</th><th class="p-3">Origem</th></tr>
+                </thead>
+                <tbody class="text-gray-300">
+                    <tr class="border-t border-[#222]">
+                        <td class="p-3">Fone Bluetooth Pro</td>
+                        <td class="p-3">01/03/26</td>
+                        <td class="p-3"><span class="bg-[#222] px-2 py-1 rounded">TikTok</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-    <main class="flex-1 p-10" id="content">
-        
-        <div id="dashboard">
-            <h1 class="text-3xl font-bold mb-8">Olá, pronta para escalar?</h1>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="glass p-6 rounded-2xl card-shadow border-l-4 border-l-gray-800">
-                    <p class="text-xs uppercase tracking-wider text-gray-500 font-bold">Cliques Hoje</p>
-                    <h3 class="text-4xl font-black mt-2">0</h3>
-                </div>
-                <div class="glass p-6 rounded-2xl card-shadow border-l-4 border-l-gray-800">
-                    <p class="text-xs uppercase tracking-wider text-gray-500 font-bold">Oportunidades</p>
-                    <h3 class="text-4xl font-black mt-2">0</h3>
-                </div>
-                <div class="glass p-6 rounded-2xl card-shadow border-l-4 border-l-orange-600">
-                    <p class="text-xs uppercase tracking-wider text-orange-500 font-bold">Comissões (R$)</p>
-                    <h3 class="text-4xl font-black mt-2 text-orange-500">0,00</h3>
-                </div>
+    <div id="creative" class="hidden">
+        <h2 class="text-2xl font-bold mb-6">Vault de Criativos</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="glass p-6 rounded-2xl border border-[#222]">
+                <h4 class="font-bold text-orange-500">Hook: "Você sabia que esse produto..."</h4>
+                <p class="text-gray-400 mt-2 text-sm">Usado no vídeo de review do aspirador. Taxa de conversão: 4.2%</p>
             </div>
         </div>
-
-        <div id="links" class="hidden">
-            <h2 class="text-2xl font-bold mb-6">Conversor de Links</h2>
-            <div class="glass p-8 rounded-2xl card-shadow">
-                <input type="text" placeholder="Cole o link original da Shopee aqui..." class="w-full bg-[#050505] border border-[#333] p-4 rounded-xl text-white outline-none focus:border-orange-600 transition">
-                <button class="mt-4 bg-orange-600 hover:bg-orange-500 w-full py-4 rounded-xl font-bold text-lg shadow-lg shadow-orange-900/20">Gerar Link Afiliado</button>
-            </div>
-        </div>
-
-        <div id="intel" class="hidden">
-            <h2 class="text-2xl font-bold mb-6">Radar de Oportunidades</h2>
-            <div class="glass p-12 rounded-2xl text-center border border-dashed border-gray-800">
-                <i data-lucide="radar" class="mx-auto w-16 h-16 text-gray-800 mb-4"></i>
-                <p class="text-gray-400">O radar está em standby. Cole uma URL para análise de conversão.</p>
-            </div>
-        </div>
+    </div>
 
     </main>
-
-    <script>
-        function show(id) {
-            document.querySelectorAll('#content > div').forEach(div => div.classList.add('hidden'));
-            document.getElementById(id).classList.remove('hidden');
-        }
-        lucide.createIcons();
-    </script>
-</body>
-</html>
