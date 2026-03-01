@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>ScaleFlow | Dashboard Profissional</title>
+    <title>ScaleFlow | Central de Comando</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -15,54 +15,64 @@
 <body class="bg-gray-50 text-gray-800 font-sans flex min-h-screen">
 
     <aside class="w-64 bg-white border-r border-gray-200 p-6 flex flex-col">
-        <h2 class="text-xl font-black text-orange-600 mb-10 tracking-tighter">SCALEFLOW</h2>
-        <nav class="space-y-2 flex-grow">
-            <button onclick="show('dashboard')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium transition"><i data-lucide="layout-dashboard" class="w-5 h-5"></i> Dashboard</button>
-            <button onclick="show('links')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium transition"><i data-lucide="link" class="w-5 h-5"></i> Conversor</button>
-            <button onclick="show('intel')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium transition"><i data-lucide="radar" class="w-5 h-5"></i> Radar</button>
-            <button onclick="show('creative')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium transition"><i data-lucide="video" class="w-5 h-5"></i> Vault Criativos</button>
+        <h2 class="text-xl font-black text-orange-600 mb-10 tracking-tighter italic">SCALEFLOW</h2>
+        <nav class="space-y-1 flex-grow">
+            <button onclick="show('dashboard')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium"><i data-lucide="layout-dashboard" class="w-5 h-5"></i> Dashboard</button>
+            <button onclick="show('links')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium"><i data-lucide="link" class="w-5 h-5"></i> Conversor</button>
+            <button onclick="show('intel')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium"><i data-lucide="radar" class="w-5 h-5"></i> Radar</button>
+            <button onclick="show('vault')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium"><i data-lucide="video" class="w-5 h-5"></i> Vault Criativos</button>
+            <button onclick="show('calendario')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium"><i data-lucide="calendar" class="w-5 h-5"></i> Calendário</button>
+            <button onclick="show('rejeicoes')" class="sidebar-item w-full text-left p-3 rounded-lg flex items-center gap-3 font-medium"><i data-lucide="x-octagon" class="w-5 h-5"></i> Log Rejeições</button>
         </nav>
     </aside>
 
     <main class="flex-1 p-10">
-        
         <div id="dashboard" class="content-section">
-            <h1 class="text-3xl font-bold mb-8">Olá, pronta para escalar?</h1>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100">
-                    <p class="text-xs uppercase text-gray-500 font-bold">Comissões (Mês)</p>
-                    <h3 class="text-4xl font-black mt-2 text-orange-600">R$ 0,00</h3>
+            <h1 class="text-3xl font-bold mb-8">Visão Geral de Operações</h1>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-2xl card-shadow border-l-4 border-l-orange-500">
+                    <p class="text-xs uppercase text-gray-500 font-bold">Comissões Altas</p>
+                    <h3 class="text-3xl font-black mt-2">R$ 1.240</h3>
+                </div>
+                <div class="bg-white p-6 rounded-2xl card-shadow border-l-4 border-l-green-500">
+                    <p class="text-xs uppercase text-gray-500 font-bold">Vendas Totais</p>
+                    <h3 class="text-3xl font-black mt-2">48</h3>
+                </div>
+                <div class="bg-white p-6 rounded-2xl card-shadow border-l-4 border-l-blue-500">
+                    <p class="text-xs uppercase text-gray-500 font-bold">Alta Procura</p>
+                    <h3 class="text-3xl font-black mt-2">12 Itens</h3>
+                </div>
+                <div class="bg-white p-6 rounded-2xl card-shadow border-l-4 border-l-purple-500">
+                    <p class="text-xs uppercase text-gray-500 font-bold">Extra Comissão</p>
+                    <h3 class="text-3xl font-black mt-2">R$ 350</h3>
                 </div>
             </div>
         </div>
 
         <div id="links" class="content-section hidden">
             <h2 class="text-2xl font-bold mb-6">Conversor de Links</h2>
-            <div class="bg-white p-8 rounded-2xl card-shadow border border-gray-100">
-                <input type="text" id="urlInput" placeholder="Cole o link do produto original..." class="w-full bg-gray-50 border border-gray-200 p-4 rounded-xl outline-none focus:border-orange-500 mb-4">
-                <button onclick="converterLink()" class="w-full bg-orange-600 text-white font-bold py-4 rounded-xl hover:bg-orange-700 transition">Gerar Link de Afiliado</button>
+            <div class="bg-white p-8 rounded-2xl card-shadow mb-6">
+                <input type="text" id="urlInput" placeholder="Cole URL aqui..." class="w-full bg-gray-50 border p-4 rounded-xl mb-4">
+                <button onclick="converterLink()" class="w-full bg-orange-600 text-white font-bold py-4 rounded-xl">Gerar Link</button>
             </div>
+            <table class="w-full bg-white rounded-2xl card-shadow overflow-hidden">
+                <tbody id="historicoLinks"></tbody>
+            </table>
         </div>
 
         <div id="intel" class="content-section hidden">
-            <h2 class="text-2xl font-bold mb-6">Radar de Produtos</h2>
-            <div class="bg-white p-12 rounded-2xl border border-dashed border-gray-300 text-center">
-                <p class="text-gray-500">Cole uma URL para analisar a escalabilidade.</p>
-            </div>
-        </div>
-
-        <div id="creative" class="content-section hidden">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold">Vault de Criativos</h2>
-                <button class="bg-gray-800 text-white px-4 py-2 rounded-lg text-sm font-bold">+ Novo Criativo</button>
-            </div>
+            <h2 class="text-2xl font-bold mb-6">Radar de Mercado</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100">
-                    <span class="text-xs font-bold text-orange-600 uppercase tracking-widest">HOOK DE VÍDEO</span>
-                    <p class="font-bold text-lg mt-2 italic">"Você não vai acreditar na utilidade desse gadget..."</p>
+                <div class="bg-white p-6 rounded-2xl border border-orange-100">
+                    <h4 class="font-bold text-orange-600">Tendência de Alta</h4>
+                    <p class="text-sm text-gray-500">Produtos começando a vender mais agora.</p>
                 </div>
             </div>
         </div>
+
+        <div id="vault" class="content-section hidden"><h2 class="text-2xl font-bold">Vault de Criativos</h2></div>
+        <div id="calendario" class="content-section hidden"><h2 class="text-2xl font-bold">Calendário de Postagens</h2></div>
+        <div id="rejeicoes" class="content-section hidden"><h2 class="text-2xl font-bold">Log de Rejeições (Produtos Ruins)</h2></div>
     </main>
 
     <script>
@@ -70,14 +80,9 @@
             document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
         }
-
         function converterLink() {
-            const input = document.getElementById('urlInput');
-            if (!input.value) return;
-            alert('Link convertido com sucesso!');
-            input.value = '';
+            alert('Link processado e salvo no histórico!');
         }
-
         lucide.createIcons();
     </script>
 </body>
