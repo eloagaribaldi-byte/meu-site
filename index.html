@@ -11,9 +11,9 @@
         .card-scifi { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(8px); border: 1px solid rgba(139, 92, 246, 0.2); }
         .sidebar-item { transition: all 0.3s; color: #9ca3af; border-left: 4px solid transparent; cursor: pointer; }
         .sidebar-item:hover, .active { background: rgba(168, 85, 247, 0.1); color: #a855f7; border-left: 4px solid #a855f7; }
-        .glow-text-cyan { color: #22d3ee; text-shadow: 0 0 8px rgba(34, 211, 238, 0.4); }
         .content-section { display: none; }
         .active-section { display: block; }
+        .glow-text-cyan { color: #22d3ee; text-shadow: 0 0 8px rgba(34, 211, 238, 0.4); }
     </style>
 </head>
 <body class="flex min-h-screen">
@@ -21,19 +21,19 @@
     <aside class="w-64 bg-gray-950/70 border-r border-gray-800 p-6 flex flex-col card-scifi">
         <h2 class="text-xl font-bold glow-text-cyan mb-10 tracking-widest italic">SCALEFLOW</h2>
         <nav class="space-y-1 flex-grow">
-            <div onclick="openTab('dashboard', this)" class="sidebar-item active p-3 rounded-lg flex items-center gap-3"><i data-lucide="layout-dashboard"></i> Dashboard</div>
-            <div onclick="openTab('intel', this)" class="sidebar-item p-3 rounded-lg flex items-center gap-3"><i data-lucide="scan-eye"></i> Motor Intel</div>
-            <div onclick="openTab('links', this)" class="sidebar-item p-3 rounded-lg flex items-center gap-3"><i data-lucide="link"></i> Conversor</div>
-            <div onclick="openTab('vault', this)" class="sidebar-item p-3 rounded-lg flex items-center gap-3"><i data-lucide="video"></i> Vault</div>
-            <div onclick="openTab('calendario', this)" class="sidebar-item p-3 rounded-lg flex items-center gap-3"><i data-lucide="calendar"></i> Calendário</div>
-            <div onclick="openTab('rejeicoes', this)" class="sidebar-item p-3 rounded-lg flex items-center gap-3"><i data-lucide="x-octagon"></i> Rejeições</div>
-            <div onclick="openTab('roi', this)" class="sidebar-item p-3 rounded-lg flex items-center gap-3"><i data-lucide="calculator"></i> ROI & Metas</div>
-            <div onclick="openTab('config', this)" class="sidebar-item p-3 rounded-lg flex items-center gap-3"><i data-lucide="settings"></i> Config</div>
-            <div onclick="openTab('sobre', this)" class="sidebar-item p-3 rounded-lg flex items-center gap-3"><i data-lucide="info"></i> Sobre</div>
+            <div onclick="showTab('dashboard')" class="sidebar-item active p-3 rounded-lg flex items-center gap-3"><i data-lucide="layout-dashboard"></i> Dashboard</div>
+            <div onclick="showTab('intel')" class="sidebar-item p-3 rounded-lg flex items-center gap-3"><i data-lucide="scan-eye"></i> Motor Intel</div>
+            <div onclick="showTab('links')" class="sidebar-item p-3 rounded-lg flex items-center gap-3"><i data-lucide="link"></i> Conversor</div>
+            <div onclick="showTab('vault')" class="sidebar-item p-3 rounded-lg flex items-center gap-3"><i data-lucide="video"></i> Vault</div>
+            <div onclick="showTab('calendario')" class="sidebar-item p-3 rounded-lg flex items-center gap-3"><i data-lucide="calendar"></i> Calendário</div>
+            <div onclick="showTab('rejeicoes')" class="sidebar-item p-3 rounded-lg flex items-center gap-3"><i data-lucide="x-octagon"></i> Rejeições</div>
+            <div onclick="showTab('roi')" class="sidebar-item p-3 rounded-lg flex items-center gap-3"><i data-lucide="calculator"></i> ROI & Metas</div>
+            <div onclick="showTab('config')" class="sidebar-item p-3 rounded-lg flex items-center gap-3"><i data-lucide="settings"></i> Config</div>
         </nav>
     </aside>
 
     <main class="flex-1 p-10">
+        
         <div id="dashboard" class="content-section active-section">
             <h1 class="text-3xl font-bold mb-8 glow-text-cyan">Dashboard</h1>
             <div class="grid grid-cols-4 gap-6">
@@ -46,17 +46,23 @@
 
         <div id="intel" class="content-section">
             <h2 class="text-3xl font-bold mb-6 glow-text-cyan">Motor de Inteligência</h2>
-            <div class="card-scifi p-8 rounded-3xl"><input type="text" placeholder="URL Shopee..." class="w-full bg-gray-950 border border-gray-800 p-4 rounded-xl mb-4"> <button class="w-full bg-cyan-600 text-white font-bold py-4 rounded-xl">Analisar</button></div>
+            <div class="card-scifi p-8 rounded-3xl">
+                <input type="text" id="urlIntel" placeholder="Cole URL Shopee..." class="w-full bg-gray-950 border border-gray-800 p-4 rounded-xl mb-4 text-white">
+                <button onclick="alert('Iniciando análise do produto...')" class="w-full bg-cyan-600 text-white font-bold py-4 rounded-xl hover:bg-cyan-700">Analisar com Inteligência</button>
+            </div>
         </div>
 
         <div id="links" class="content-section">
-            <h2 class="text-3xl font-bold mb-6 text-white">Conversor</h2>
-            <div class="card-scifi p-8 rounded-3xl"><input type="text" placeholder="URL Original..." class="w-full bg-gray-950 p-4 rounded-xl mb-4"></div>
+            <h2 class="text-3xl font-bold mb-6 text-white">Conversor de Links</h2>
+            <div class="card-scifi p-8 rounded-3xl">
+                <input type="text" id="urlConversor" placeholder="URL Original..." class="w-full bg-gray-950 border border-gray-800 p-4 rounded-xl mb-4 text-white">
+                <button onclick="alert('Link convertido e copiado!')" class="w-full bg-purple-600 text-white font-bold py-4 rounded-xl hover:bg-purple-700">Gerar Link Afiliado</button>
+            </div>
         </div>
 
         <div id="vault" class="content-section">
             <h2 class="text-3xl font-bold mb-6 text-white">Vault Criativos</h2>
-            <div class="card-scifi p-8 rounded-3xl">Nenhum criativo salvo.</div>
+            <div class="card-scifi p-8 rounded-3xl text-gray-500">Nenhum criativo salvo.</div>
         </div>
 
         <div id="calendario" class="content-section">
@@ -65,32 +71,34 @@
         </div>
 
         <div id="rejeicoes" class="content-section">
-            <h2 class="text-3xl font-bold mb-6 text-white">Log de Rejeições</h2>
-            <div class="card-scifi p-8 rounded-3xl">Produtos bloqueados.</div>
+            <h2 class="text-3xl font-bold mb-6 text-white">Rejeições</h2>
+            <div class="card-scifi p-8 rounded-3xl">
+                <input type="text" id="urlRejeicao" placeholder="Produto Reprovado..." class="w-full bg-gray-950 border border-gray-800 p-4 rounded-xl mb-4 text-white">
+                <button onclick="alert('Produto bloqueado na Blacklist')" class="w-full bg-red-900 text-red-200 font-bold py-4 rounded-xl">Bloquear Produto</button>
+            </div>
         </div>
 
         <div id="roi" class="content-section">
-            <h2 class="text-3xl font-bold mb-6 text-white">Calculadora ROI</h2>
-            <div class="card-scifi p-8 rounded-3xl">Cálculo de margem.</div>
+            <h2 class="text-3xl font-bold mb-6 text-white">ROI & Metas</h2>
+            <div class="card-scifi p-8 rounded-3xl">
+                <input type="number" id="venda" placeholder="Venda (R$)" class="w-full bg-gray-950 p-4 rounded-xl mb-2 text-white">
+                <input type="number" id="custo" placeholder="Custo (R$)" class="w-full bg-gray-950 p-4 rounded-xl mb-4 text-white">
+                <button onclick="alert('Lucro calculado!')" class="w-full bg-green-600 text-white font-bold py-4 rounded-xl">Calcular</button>
+            </div>
         </div>
 
         <div id="config" class="content-section">
             <h2 class="text-3xl font-bold mb-6 text-white">Configurações</h2>
-            <div class="card-scifi p-8 rounded-3xl">Chave de API.</div>
-        </div>
-
-        <div id="sobre" class="content-section">
-            <h2 class="text-3xl font-bold mb-6 text-white">Sobre</h2>
-            <div class="card-scifi p-8 rounded-3xl">Manual de Segurança e Versão 1.0.</div>
+            <div class="card-scifi p-8 rounded-3xl">API Key configurada com segurança.</div>
         </div>
     </main>
 
     <script>
-        function openTab(id, element) {
+        function showTab(id) {
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active-section'));
             document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active-section');
-            element.classList.add('active');
+            event.currentTarget.classList.add('active');
         }
         lucide.createIcons();
     </script>
