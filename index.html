@@ -2,52 +2,46 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Garimpo - Shopee</title>
+    <title>Garimpo Pro - Dashboard Completo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        .bg-orange-brand { background-color: #FF5722; }
-        .text-orange-brand { color: #FF5722; }
-    </style>
 </head>
 <body class="bg-black text-white min-h-screen p-4 md:p-8">
-
-    <div class="max-w-3xl mx-auto">
+    <div class="max-w-4xl mx-auto">
         <header class="mb-10 text-center">
-            <h1 class="text-4xl font-black text-white mb-2">MINHAS <span class="text-orange-brand">OPORTUNIDADES</span></h1>
-            <p class="text-gray-400">Garimpe, organize e escale com inteligência.</p>
+            <h1 class="text-3xl font-black text-orange-500 uppercase tracking-tighter">Garimpo Inteligente</h1>
         </header>
 
-        <div class="bg-gray-900 p-6 rounded-2xl shadow-2xl border border-gray-800 mb-8">
-            <div class="space-y-4">
-                <input type="text" id="link" placeholder="Cole o link do produto aqui..." 
-                    class="w-full bg-black border border-gray-700 p-4 rounded-xl text-white focus:ring-2 focus:ring-orange-brand outline-none transition">
-                <textarea id="obs" placeholder="Por que este produto é um vencedor? (ex: nicho, sazonalidade, ticket)..." 
-                    class="w-full bg-black border border-gray-700 p-4 rounded-xl text-white focus:ring-2 focus:ring-orange-brand outline-none h-24"></textarea>
-                <button onclick="salvarProduto()" 
-                    class="w-full bg-orange-brand hover:bg-orange-600 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition transform active:scale-95">
-                    <i data-lucide="plus-circle"></i> Adicionar ao Garimpo
-                </button>
+        <div class="bg-gray-900 p-6 rounded-2xl shadow-xl border border-gray-800 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" id="pNome" placeholder="Nome do Produto" class="bg-black p-3 rounded-lg border border-gray-700 w-full">
+                <input type="number" id="pVendas" placeholder="Total de Vendas Estimado" class="bg-black p-3 rounded-lg border border-gray-700 w-full">
+                <input type="text" id="pLink" placeholder="Link do Produto" class="bg-black p-3 rounded-lg border border-gray-700 w-full col-span-2">
             </div>
+            <button onclick="adicionarProduto()" class="w-full mt-4 bg-orange-600 hover:bg-orange-500 py-3 rounded-lg font-bold transition flex items-center justify-center gap-2">
+                <i data-lucide="plus"></i> Adicionar ao Garimpo
+            </button>
         </div>
 
         <div id="listaProdutos" class="space-y-4"></div>
     </div>
 
     <script>
-        function salvarProduto() {
-            const link = document.getElementById('link').value;
-            const obs = document.getElementById('obs').value;
-            if(!link) return alert("Cole o link!");
+        function adicionarProduto() {
+            const nome = document.getElementById('pNome').value;
+            const vendas = document.getElementById('pVendas').value;
+            const link = document.getElementById('pLink').value;
+            
+            if(!nome || !link) return alert("Preencha ao menos o Nome e o Link!");
 
-            const produto = { link, obs, data: new Date().toLocaleDateString() };
+            const produto = { nome, vendas, link, data: new Date().toLocaleDateString() };
             const lista = JSON.parse(localStorage.getItem('garimpo') || '[]');
             lista.unshift(produto);
             localStorage.setItem('garimpo', JSON.stringify(lista));
             
-            document.getElementById('link').value = '';
-            document.getElementById('obs').value = '';
+            document.getElementById('pNome').value = '';
+            document.getElementById('pVendas').value = '';
+            document.getElementById('pLink').value = '';
             carregarLista();
         }
 
@@ -55,29 +49,35 @@
             const lista = JSON.parse(localStorage.getItem('garimpo') || '[]');
             const container = document.getElementById('listaProdutos');
             container.innerHTML = lista.map((p, i) => `
-                <div class="bg-gray-900 p-5 rounded-2xl border border-gray-800 flex justify-between items-start group hover:border-orange-brand transition">
-                    <div>
-                        <span class="text-xs text-gray-500">${p.data}</span>
-                        <a href="${p.link}" target="_blank" class="block text-orange-brand font-bold mt-1 hover:underline">Ver Produto Shopee</a>
-                        <p class="text-gray-300 mt-2 text-sm">${p.obs}</p>
+                <div class="bg-gray-900 p-5 rounded-2xl border border-gray-800 hover:border-orange-500 transition">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-bold text-lg">${p.nome}</h3>
+                            <a href="${p.link}" target="_blank" class="text-orange-500 underline text-sm">Ver na Shopee</a>
+                        </div>
+                        <span class="bg-black px-3 py-1 rounded-full text-xs font-bold border border-gray-700">${p.vendas > 1000 ? '🔥 PRODUTO VENCEDOR' : 'Analisando'}</span>
                     </div>
-                    <button onclick="excluir(${i})" class="text-gray-600 hover:text-red-500">
-                        <i data-lucide="trash-2"></i>
-                    </button>
+                    <div class="mt-4 flex gap-2">
+                        <button onclick="gerarLegenda('${p.nome}')" class="text-xs bg-gray-800 px-3 py-2 rounded hover:bg-white hover:text-black transition">Gerar Legenda</button>
+                        <button onclick="excluir(${i})" class="text-xs text-red-500 px-3 py-2 border border-red-900 rounded hover:bg-red-900 transition">Remover</button>
+                    </div>
                 </div>
             `).join('');
             lucide.createIcons();
         }
 
-        function excluir(index) {
+        function gerarLegenda(nome) {
+            alert("Copie sua legenda:\n\n🔥 Está bombando! O item que você precisa: " + nome + " \n👉 Link: [SEU LINK AQUI] \n#achadinhos #shopee");
+        }
+
+        function excluir(i) {
             let lista = JSON.parse(localStorage.getItem('garimpo'));
-            lista.splice(index, 1);
+            lista.splice(i, 1);
             localStorage.setItem('garimpo', JSON.stringify(lista));
             carregarLista();
         }
 
         carregarLista();
-        lucide.createIcons();
     </script>
 </body>
 </html>
